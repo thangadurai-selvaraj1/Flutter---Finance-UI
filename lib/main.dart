@@ -1,4 +1,4 @@
-import 'package:financeappui/screens/card_screen.dart';
+import 'package:financeappui/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'resourcs/recources_index.dart';
@@ -9,6 +9,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
       ),
-      home: const CardScreen(),
+      home: const SplashScreen(),
     );
   }
 }
