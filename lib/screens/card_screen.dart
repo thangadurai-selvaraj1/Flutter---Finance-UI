@@ -5,8 +5,17 @@ import '../resourcs/recources_index.dart';
 import '../utils/dummy_data.dart';
 import '../widgets/widget_index.dart';
 
-class CardScreen extends StatelessWidget {
+class CardScreen extends StatefulWidget {
   const CardScreen({Key? key}) : super(key: key);
+
+  @override
+  State<CardScreen> createState() => _CardScreenState();
+}
+
+class _CardScreenState extends State<CardScreen> {
+  int _cardPosition = 0;
+  var cardList = [1, 2, 3];
+  var _pageController = PageController(initialPage: 0);
 
   @override
   Widget build(BuildContext context) {
@@ -68,11 +77,46 @@ class CardScreen extends StatelessWidget {
                 ],
               ),
               addVerticalSpace(25.0),
-              const DebitAndCreditCard(
-                  cardLogo: MyImages.CARD_VISA_LOGO,
-                  cardNumber: Strings.CARD_NUMBER,
-                  cardHolderName: Strings.CARD_HOLDER_NAME,
-                  expiryDate: Strings.CARD_DATE),
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 3,
+                child: PageView.builder(
+                    controller: _pageController,
+                    physics: BouncingScrollPhysics(),
+                    onPageChanged: (index) {
+                      setState(() {
+                        _cardPosition = index;
+                      });
+                    },
+                    itemCount: cardList.length,
+                    itemBuilder: (context, item) {
+                      return DebitAndCreditCard(
+                          cardLogo: MyImages.CARD_VISA_LOGO,
+                          cardNumber: Strings.CARD_NUMBER,
+                          cardHolderName: Strings.CARD_HOLDER_NAME,
+                          expiryDate: Strings.CARD_DATE);
+                    }),
+              ),
+              SizedBox(
+                height: 20,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ...List.generate(
+                        cardList.length,
+                        (index) => Indicator(
+                              isSelected: _cardPosition == index ? true : false,
+                              onPressed: () {
+                                setState(() {
+                                  _cardPosition = index;
+                                  _pageController.animateToPage(_cardPosition,
+                                      duration: Duration(milliseconds: 300),
+                                      curve: Curves.bounceInOut);
+                                });
+                              },
+                            ))
+                  ],
+                ),
+              ),
               addVerticalSpace(25.0),
               const Text(
                 Strings.CARD_RECENT_TRANSACTION,

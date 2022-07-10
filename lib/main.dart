@@ -1,4 +1,4 @@
-import 'package:financeappui/screens/splash_screen.dart';
+import 'package:financeappui/screens/card_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'resourcs/recources_index.dart';
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
       ),
-      home: const SplashScreen(),
+      home: const CardScreen(),
     );
   }
 }
